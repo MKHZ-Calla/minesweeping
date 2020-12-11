@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <link rel="stylesheet" type="text/css" href="https://www.huangwx.cn/css/sweetalert.css">
+    <script type="text/javascript" src="https://www.huangwx.cn/js/sweetalert-dev.js"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>扫雷</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="icon" href="favicon.ico">
+</head>
+
+<body>
+    <h1>一起来扫雷</h1>
+    <div id="mine">
+        <div class="level">
+            <button class="active">简单</button>
+            <button>中等</button>
+            <button>困难</button>
+             <button>重新开始</button>
+        </div>
+        <div class="gameBox" style="float：right">
+        </div>
+        
+        <div class="tip">剩余雷数：<span class="mineNum"></span> 个
+        </div>
+        <br>
+        <div class="tip txtleft">提示：
+                <ul>
+                    <li>1、选择难度游戏开始,计时器在下方</li>
+                    <li>2、游戏过程中点击“重新开始”将开始新游戏</li>
+                </ul>
+            </div>
+        </div>
+
+    <div id="div1" style="float：left">
+        <div id="count">
+            <span id="id_H">00</span>
+            <span id="id_M">00</span>
+            <span id="id_S">00</span>
+        </div>
+        <input id="start" type="button" value="开始">
+        <input id="pause" type="button" value="暂停">
+        <input id="stop" type="button" value="停止">
+    </div>
+    <script>
+        //可以将查找标签节点的操作进行简化  var btn = getElementById('btn')
+        function $(id) {
+            return document.getElementById(id)
+        }
+        window.onload = function() {
+            //点击开始建 开始计数
+            var count = 0
+            var timer = null //timer变量记录定时器setInterval的返回值
+            $("start").onclick = function() {
+                timer = setInterval(function() {
+                    count++;
+                    console.log(count)
+                        // 需要改变页面上时分秒的值
+                    console.log($("id_S"))
+                    $("id_S").innerHTML = showNum(count % 60)
+                    $("id_M").innerHTML = showNum(parseInt(count / 60) % 60)
+                    $("id_H").innerHTML = showNum(parseInt(count / 60 / 60))
+                }, 1000)
+            }
+            $("pause").onclick = function() {
+                    //取消定时器
+                    clearInterval(timer)
+                }
+                //停止记数  数据清零  页面展示数据清零
+            $("stop").onclick = function() {
+                //取消定时器
+                $("pause").onclick()
+                    // clearInterval(timer)
+                    //数据清零  总秒数清零
+                count = 0
+                    //页面展示数据清零
+                $("id_S").innerHTML = "00"
+                $("id_M").innerHTML = "00"
+                $("id_H").innerHTML = "00"
+            }
+
+            //封装一个处理单位数字的函数
+            function showNum(num) {
+                if (num < 10) {
+                    return '0' + num
+                }
+                return num
+            }
+        }
+    </script>
+
+    <script src="script.js"></script>
+</body>
+
+</html>
